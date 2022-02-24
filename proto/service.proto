@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package proto;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "proto/sxcctw.api.db";
+
+enum RecordStatus {
+  NORMAL = 0;
+  EXPIRED = 1;
+  NOTFOUND = 2;
+}
+
+message CreateRecordRequest {
+  string originUrl = 1;
+  google.protobuf.Timestamp expireAt = 2;
+}
+
+message CreateRecordResponse {
+  string shortenedId = 1;
+}
+
+message GetOriginUrlRequest {
+  string shortenedId = 1;
+}
+
+message GetOriginUrlResponse {
+  string originUrl = 1;
+  RecordStatus status = 2;
+}
+
+service RecordService {
+  rpc CreateRecord(CreateRecordRequest) returns (CreateRecordResponse);
+  rpc GetOriginUrl(GetOriginUrlRequest) returns (GetOriginUrlResponse);
+}
