@@ -1,0 +1,7 @@
+serverAddress: 5001
+dbServerPort: 5431
+dbUserName: root
+dbPassword: root
+dbHost: localhost
+dbPort: 3306
+dbName: sxcctw

@@ -4,7 +4,7 @@ package proto;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "proto/sxcctw.api.db";
+option go_package = "github.com/Xanonymous-GitHub/sxcctw/db/proto";
 
 enum RecordStatus {
   NORMAL = 0;
