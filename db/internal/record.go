@@ -67,18 +67,19 @@ func LoadRecord(db *gorm.DB, loadRecordRequest *pb.GetOriginUrlRequest) (*pb.Get
 		return nil, err
 	}
 
-	var record schema.Record
-	var isExist bool
+	var storedRecord *schema.Record
+	//var isExist bool
 	err = db.Model(&schema.Record{}).
-		First(&record, "id = ?", decodedId).
-		Find(&isExist).
+		Where("id = ?", decodedId).
+		Find(&storedRecord).
 		Error
 	if err != nil {
 		return nil, err
 	}
 
 	now := time.Now()
-	isExpired := now.After(record.ExpiredAt)
+	isExpired := now.After(storedRecord.ExpiredAt)
+	isExist := storedRecord.ID != 0 && storedRecord.ID == decodedId
 
 	var status pb.RecordStatus
 	if !isExist {
@@ -88,7 +89,7 @@ func LoadRecord(db *gorm.DB, loadRecordRequest *pb.GetOriginUrlRequest) (*pb.Get
 	}
 
 	return &pb.GetOriginUrlResponse{
-		OriginUrl: record.OriginUrl,
+		OriginUrl: storedRecord.OriginUrl,
 		Status:    status,
 	}, nil
 }
