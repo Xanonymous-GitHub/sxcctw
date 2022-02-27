@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package proto;
+package pb;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/Xanonymous-GitHub/sxcctw/db/proto";
+option go_package = "github.com/Xanonymous-GitHub/sxcctw/db/proto/pb";
 
 enum RecordStatus {
   NORMAL = 0;

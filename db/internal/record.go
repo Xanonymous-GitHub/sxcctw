@@ -1,7 +1,7 @@
 package internal
 
 import (
-	"github.com/Xanonymous-GitHub/sxcctw/db/pkg/proto"
+	"github.com/Xanonymous-GitHub/sxcctw/db/pkg/proto/pb"
 	"github.com/Xanonymous-GitHub/sxcctw/db/pkg/schema"
 	"gorm.io/gorm"
 	"math/rand"
@@ -21,14 +21,14 @@ func isIdUsed(db *gorm.DB, testId uint64) (bool, error) {
 	return isExists, nil
 }
 
-func recordStatus(isExpired bool) proto.RecordStatus {
+func recordStatus(isExpired bool) pb.RecordStatus {
 	if isExpired {
-		return proto.RecordStatus_EXPIRED
+		return pb.RecordStatus_EXPIRED
 	}
-	return proto.RecordStatus_NORMAL
+	return pb.RecordStatus_NORMAL
 }
 
-func SaveRecord(db *gorm.DB, newRecordRequest *proto.CreateRecordRequest) (*proto.CreateRecordResponse, error) {
+func SaveRecord(db *gorm.DB, newRecordRequest *pb.CreateRecordRequest) (*pb.CreateRecordResponse, error) {
 	// Generate a unique id for SQL to record each short link,
 	// since gorm's id auto-generation process will be executed after Create operation called,
 	// and we encode this unique ID to be the shortened URL id, so we can not use gorm's auto ID.
@@ -58,10 +58,10 @@ func SaveRecord(db *gorm.DB, newRecordRequest *proto.CreateRecordRequest) (*prot
 		return nil, err
 	}
 
-	return &proto.CreateRecordResponse{ShortenedId: shortenedId}, nil
+	return &pb.CreateRecordResponse{ShortenedId: shortenedId}, nil
 }
 
-func LoadRecord(db *gorm.DB, loadRecordRequest *proto.GetOriginUrlRequest) (*proto.GetOriginUrlResponse, error) {
+func LoadRecord(db *gorm.DB, loadRecordRequest *pb.GetOriginUrlRequest) (*pb.GetOriginUrlResponse, error) {
 	decodedId, err := Decode(loadRecordRequest.ShortenedId)
 	if err != nil {
 		return nil, err
@@ -80,14 +80,14 @@ func LoadRecord(db *gorm.DB, loadRecordRequest *proto.GetOriginUrlRequest) (*pro
 	now := time.Now()
 	isExpired := now.After(record.ExpiredAt)
 
-	var status proto.RecordStatus
+	var status pb.RecordStatus
 	if !isExist {
-		status = proto.RecordStatus_NOTFOUND
+		status = pb.RecordStatus_NOTFOUND
 	} else {
 		status = recordStatus(isExpired)
 	}
 
-	return &proto.GetOriginUrlResponse{
+	return &pb.GetOriginUrlResponse{
 		OriginUrl: record.OriginUrl,
 		Status:    status,
 	}, nil

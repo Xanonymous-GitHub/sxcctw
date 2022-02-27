@@ -4,7 +4,7 @@
 // - protoc             v3.19.4
 // source: service.proto
 
-package proto
+package pb
 
 import (
 	context "context"
@@ -36,7 +36,7 @@ func NewRecordServiceClient(cc grpc.ClientConnInterface) RecordServiceClient {
 
 func (c *recordServiceClient) CreateRecord(ctx context.Context, in *CreateRecordRequest, opts ...grpc.CallOption) (*CreateRecordResponse, error) {
 	out := new(CreateRecordResponse)
-	err := c.cc.Invoke(ctx, "/db.RecordService/CreateRecord", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pb.RecordService/CreateRecord", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -45,7 +45,7 @@ func (c *recordServiceClient) CreateRecord(ctx context.Context, in *CreateRecord
 
 func (c *recordServiceClient) GetOriginUrl(ctx context.Context, in *GetOriginUrlRequest, opts ...grpc.CallOption) (*GetOriginUrlResponse, error) {
 	out := new(GetOriginUrlResponse)
-	err := c.cc.Invoke(ctx, "/db.RecordService/GetOriginUrl", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pb.RecordService/GetOriginUrl", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -94,7 +94,7 @@ func _RecordService_CreateRecord_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/db.RecordService/CreateRecord",
+		FullMethod: "/pb.RecordService/CreateRecord",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RecordServiceServer).CreateRecord(ctx, req.(*CreateRecordRequest))
@@ -112,7 +112,7 @@ func _RecordService_GetOriginUrl_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/db.RecordService/GetOriginUrl",
+		FullMethod: "/pb.RecordService/GetOriginUrl",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(RecordServiceServer).GetOriginUrl(ctx, req.(*GetOriginUrlRequest))
@@ -124,7 +124,7 @@ func _RecordService_GetOriginUrl_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var RecordService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "db.RecordService",
+	ServiceName: "pb.RecordService",
 	HandlerType: (*RecordServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

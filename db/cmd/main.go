@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/Xanonymous-GitHub/sxcctw/db/internal"
-	"github.com/Xanonymous-GitHub/sxcctw/db/pkg/proto"
+	"github.com/Xanonymous-GitHub/sxcctw/db/pkg/proto/pb"
 	"github.com/Xanonymous-GitHub/sxcctw/db/pkg/vp"
 	"google.golang.org/grpc"
 	"log"
@@ -15,7 +15,7 @@ func main() {
 
 	server := grpc.NewServer()
 
-	proto.RegisterRecordServiceServer(server, &internal.RecordService{})
+	pb.RegisterRecordServiceServer(server, &internal.RecordService{})
 
 	lis, err := net.Listen("tcp", serverAddress)
 	if err != nil {
