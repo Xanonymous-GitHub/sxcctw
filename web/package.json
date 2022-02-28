@@ -5,7 +5,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --ext=.ts,.vue",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "@vueuse/core": "^7.7.0",
