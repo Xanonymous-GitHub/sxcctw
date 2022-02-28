@@ -8,11 +8,11 @@
 # run_cmd: "./run.sh"
  
 # Specify the directory where the compiled object files are stored
-# output: /bin/app
+output: ./out/server
 
 # The file name suffix that needs to be monitored. By default, there is only a '.go' file.
-# watch_exts:
-#   - .yml
+watch_exts:
+  - .yml
 
 # The directory that needs to listen for file changes. By default, only the current directory.
 # watch_paths:
@@ -38,14 +38,14 @@ vendor_watch: false
 #   - path
 
 # main package path, can also be a single file, multiple files separated by commas
-build_pkg: ""
+build_pkg: "./cmd"
 
 # build tags
 build_tags: ""
 
 # Commands that can be executed before build the app
-# prev_build_cmds:
-#   - swag init
+prev_build_cmds:
+- go mod tidy
 
 # Whether to prohibit automatic operation
 disable_run: false
