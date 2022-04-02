@@ -24,8 +24,8 @@ watch_paths:
 vendor_watch: false
 
 # Directory that do not need to listen for file changes
-# excluded_paths:
-#   - path
+excluded_paths:
+  - ../../web/
 
 # main package path, can also be a single file, multiple files separated by commas
 build_pkg: "."

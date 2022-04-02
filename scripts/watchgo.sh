@@ -3,7 +3,7 @@
 start_go_watch() {
   local entry_name="$1"
   readonly current_script_pos="$(dirname "$0")"
-  local entry_top_path="$current_script_pos/cmd"
+  local entry_top_path="$current_script_pos/../cmd"
   local full_entry_path="$entry_top_path/$entry_name"
 
   if [ ! -d "$full_entry_path" ]; then
