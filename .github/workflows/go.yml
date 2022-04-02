@@ -19,7 +19,7 @@ jobs:
         go-version: 1.18
 
     - name: Test
-      run: ./script/go-verifies.sh
+      run: ./scripts/go-verifies.sh
     - name: Build DB
       run: go build ./cmd/sxcctw_db
     - name: Build API
