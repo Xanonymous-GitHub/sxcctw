@@ -37,6 +37,6 @@ func (h *handler) HandleGetOriginUrl(ctx *gin.Context) {
 
 }
 
-func (h handler) HandleCreateRecord(ctx *gin.Context) {
+func (h *handler) HandleCreateRecord(ctx *gin.Context) {
 
 }
