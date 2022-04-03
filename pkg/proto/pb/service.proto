@@ -4,7 +4,7 @@ package pb;
 
 import "google/protobuf/timestamp.proto";
 
-option go_package = "github.com/Xanonymous-GitHub/sxcctw/db/proto/pb";
+option go_package = "github.com/Xanonymous-GitHub/sxcctw/pkg/proto/pb";
 
 enum RecordStatus {
   NORMAL = 0;
@@ -13,20 +13,20 @@ enum RecordStatus {
 }
 
 message CreateRecordRequest {
-  string originUrl = 1;
+  string origin_url = 1;
   google.protobuf.Timestamp expireAt = 2;
 }
 
 message CreateRecordResponse {
-  string shortenedId = 1;
+  string shortened_id = 1;
 }
 
 message GetOriginUrlRequest {
-  string shortenedId = 1;
+  string shortened_id = 1;
 }
 
 message GetOriginUrlResponse {
-  string originUrl = 1;
+  string origin_url = 1;
   RecordStatus status = 2;
 }
 
