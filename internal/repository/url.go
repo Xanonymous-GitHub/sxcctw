@@ -10,7 +10,7 @@ import (
 
 type UrlRepository interface {
 	GetOriginUrlWith(ctx context.Context, shortenedId string) (*pb.GetOriginUrlResponse, error)
-	CreateUrlShortIdWith(ctx context.Context, originUrl string, expireAt time.Time) (*pb.CreateRecordResponse, error)
+	CreateRecordWith(ctx context.Context, originUrl string, expireAt time.Time) (*pb.CreateRecordResponse, error)
 }
 
 type urlRepository struct {
@@ -39,7 +39,7 @@ func (r *urlRepository) GetOriginUrlWith(ctx context.Context, shortenedId string
 	return resp, nil
 }
 
-func (r *urlRepository) CreateUrlShortIdWith(ctx context.Context, originUrl string, expireAt time.Time) (*pb.CreateRecordResponse, error) {
+func (r *urlRepository) CreateRecordWith(ctx context.Context, originUrl string, expireAt time.Time) (*pb.CreateRecordResponse, error) {
 	req := &pb.CreateRecordRequest{
 		OriginUrl: originUrl,
 		ExpireAt:  timestamppb.New(expireAt),
