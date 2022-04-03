@@ -35,7 +35,7 @@ func NewEngine(lc fx.Lifecycle) (*gin.Engine, error) {
 		promhttp.Handler().ServeHTTP(c.Writer, c.Request)
 	})
 
-	serverAddr := fmt.Sprintf(":%s", env.HttpServerPort)
+	serverAddr := fmt.Sprintf(":%s", env.ApiRestServerPort)
 	srv := &http.Server{
 		Addr:    serverAddr,
 		Handler: engine,
