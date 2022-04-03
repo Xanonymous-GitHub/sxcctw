@@ -15,7 +15,7 @@ require (
 	go.uber.org/fx v1.17.1
 	google.golang.org/grpc v1.45.0
 	google.golang.org/protobuf v1.28.0
-	gorm.io/driver/mysql v1.3.2
+	gorm.io/driver/mysql v1.3.3
 	gorm.io/gorm v1.23.4
 )
 
@@ -59,8 +59,8 @@ require (
 	go.uber.org/multierr v1.8.0 // indirect
 	go.uber.org/zap v1.21.0 // indirect
 	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 // indirect
-	golang.org/x/net v0.0.0-20220401154927-543a649e0bdd // indirect
-	golang.org/x/sys v0.0.0-20220330033206-e17cdc41300f // indirect
+	golang.org/x/net v0.0.0-20220403103023-749bd193bc2b // indirect
+	golang.org/x/sys v0.0.0-20220403020550-483a9cbc67c0 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/genproto v0.0.0-20220401170504-314d38edb7de // indirect
 	gopkg.in/ini.v1 v1.66.4 // indirect
