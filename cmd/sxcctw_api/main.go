@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/Xanonymous-GitHub/sxcctw/internal/api/client"
-	"github.com/Xanonymous-GitHub/sxcctw/internal/api/server"
+	"github.com/Xanonymous-GitHub/sxcctw/internal/api/handler"
 	"github.com/Xanonymous-GitHub/sxcctw/pkg/ginx"
 	"github.com/Xanonymous-GitHub/sxcctw/pkg/logrux"
 	"go.uber.org/fx"
@@ -13,10 +13,10 @@ func main() {
 		fx.Provide(
 			ginx.NewEngine,
 			logrux.NewLogger,
+			client.NewRecordServiceClient,
 		),
 		fx.Invoke(
-			server.RegisterRestApiHandlers,
-			client.NewRecordServiceClient,
+			handler.RegisterRestApiHandlers,
 		),
 	).Run()
 }

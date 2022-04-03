@@ -1,4 +1,4 @@
-package server
+package handler
 
 import (
 	"github.com/Xanonymous-GitHub/sxcctw/internal/repository"
@@ -7,8 +7,6 @@ import (
 	"github.com/Xanonymous-GitHub/sxcctw/pkg/proto/pb"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
-	"net/http"
-	"time"
 )
 
 func RegisterRestApiHandlers(recordSvcClient *pb.RecordServiceClient, router *gin.Engine, logger *logrus.Logger) error {
@@ -41,43 +39,4 @@ func CreateNewRestApiHandlerWith(urlService service.UrlService, logger *logrus.L
 		urlService: urlService,
 		logger:     logger,
 	}
-}
-
-type createRecordRequest struct {
-	OriginUrl string    `json:"originUrl,omitempty"`
-	ExpireAt  time.Time `json:"expireAt"`
-}
-
-type createRecordResponse struct {
-	ShortenedID string `json:"shortenedID,omitempty"`
-}
-
-func (h *handler) HandleGetOriginUrl(ctx *gin.Context) {
-
-}
-
-func (h *handler) HandleCreateRecord(ctx *gin.Context) {
-	var req *createRecordRequest
-
-	err := ctx.BindJSON(&req)
-	if err != nil {
-		h.logger.Errorln(err)
-		ctx.AbortWithStatus(http.StatusBadRequest)
-		return
-	}
-
-	shortenedID, err := h.urlService.CreateRecord(req.OriginUrl, req.ExpireAt)
-	if err != nil {
-		h.logger.Errorln(err)
-		ctx.AbortWithStatus(http.StatusInternalServerError)
-		return
-	}
-	if shortenedID == nil {
-		h.logger.Errorln("shortenedID is nil")
-		ctx.AbortWithStatus(http.StatusInternalServerError)
-		return
-	}
-
-	resp := &createRecordResponse{ShortenedID: *shortenedID}
-	ctx.JSON(http.StatusCreated, resp)
 }
