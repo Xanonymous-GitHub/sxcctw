@@ -12,7 +12,7 @@ type RecordRepository interface {
 	LoadRecord(id uint64) (*schema.Record, error)
 }
 
-type repository struct {
+type recordRepository struct {
 	db     *gorm.DB
 	logger *logrus.Logger
 }
@@ -21,13 +21,13 @@ func CreateNewRecordRepositoryWith(
 	db *gorm.DB,
 	logger *logrus.Logger,
 ) RecordRepository {
-	return &repository{
+	return &recordRepository{
 		db:     db,
 		logger: logger,
 	}
 }
 
-func (r *repository) IsIdUsed(id uint64) bool {
+func (r *recordRepository) IsIdUsed(id uint64) bool {
 	var isExists bool
 
 	if err := r.db.Model(&schema.Record{}).
@@ -42,7 +42,7 @@ func (r *repository) IsIdUsed(id uint64) bool {
 	return isExists
 }
 
-func (r *repository) SaveRecord(record schema.Record) error {
+func (r *recordRepository) SaveRecord(record schema.Record) error {
 	result := r.db.Create(record)
 
 	err := result.Error
@@ -54,7 +54,7 @@ func (r *repository) SaveRecord(record schema.Record) error {
 	return nil
 }
 
-func (r *repository) LoadRecord(id uint64) (*schema.Record, error) {
+func (r *recordRepository) LoadRecord(id uint64) (*schema.Record, error) {
 	var storedRecord *schema.Record
 
 	if err := r.db.Model(&schema.Record{}).

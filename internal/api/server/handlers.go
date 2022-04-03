@@ -20,7 +20,7 @@ func RegisterRestApiHandlers(router *gin.Engine, logger *logrus.Logger) error {
 
 type RestApiHandler interface {
 	HandleGetOriginUrl(*gin.Context)
-	HandleCreateShortUrl(*gin.Context)
+	HandleCreateRecord(*gin.Context)
 }
 
 type handler struct {
@@ -37,6 +37,6 @@ func (h *handler) HandleGetOriginUrl(ctx *gin.Context) {
 
 }
 
-func (h handler) HandleCreateShortUrl(ctx *gin.Context) {
+func (h handler) HandleCreateRecord(ctx *gin.Context) {
 
 }
