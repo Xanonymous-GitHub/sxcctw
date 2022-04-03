@@ -46,5 +46,7 @@ log_level: "debug"
 # Need to increase environment variables, the current environment variables are loaded by default
 envs:
   - DEBUG=true
-  - GRPC_SEVER_PORT=50051
-  - HTTP_SERVER_PORT=8888
+  - DB_GRPC_SEVER_PORT=50051
+  - DB_GRPC_SERVER_HOST=localhost
+  - API_REST_SERVER_PORT=8888
+  - API_ROOT_PATH=/api
