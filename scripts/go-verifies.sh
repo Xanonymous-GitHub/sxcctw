@@ -7,6 +7,5 @@ cd "$exec_pos" \
 && go clean ./...\
 && go fix ./...\
 && go fmt ./...\
-&& go generate ./...\
 && go vet ./... \
 && go test -gcflags=-l ./...
