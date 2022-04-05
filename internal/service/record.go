@@ -63,7 +63,7 @@ func (s *service) CreateRecord(req *pb.CreateRecordRequest) (*pb.CreateRecordRes
 		ExpiredAt:   req.ExpireAt.AsTime(),
 	}
 
-	err := s.recordRepository.SaveRecord(*newRecord)
+	err := s.recordRepository.SaveRecord(newRecord)
 	if err != nil {
 		s.logger.Errorln(err)
 		return nil, status.Error(codes.Internal, err.Error())

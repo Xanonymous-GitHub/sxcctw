@@ -8,7 +8,7 @@ import (
 
 type RecordRepository interface {
 	IsIdUsed(id uint64) bool
-	SaveRecord(record schema.Record) error
+	SaveRecord(record *schema.Record) error
 	LoadRecord(id uint64) (*schema.Record, error)
 }
 
@@ -42,7 +42,7 @@ func (r *recordRepository) IsIdUsed(id uint64) bool {
 	return isExists
 }
 
-func (r *recordRepository) SaveRecord(record schema.Record) error {
+func (r *recordRepository) SaveRecord(record *schema.Record) error {
 	result := r.db.Create(record)
 
 	err := result.Error
