@@ -14,9 +14,11 @@ func main() {
 			grpc.NewGRPCServer,
 			logrux.NewLogger,
 			gorm.NewGORMMySQLClient,
+			gorm.CreateNewDBClientWith,
 		),
 		fx.Invoke(
 			server.RegisterRecordServiceServer,
+			gorm.InitializeDBTables,
 		),
 	).Run()
 }
