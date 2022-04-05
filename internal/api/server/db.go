@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/Xanonymous-GitHub/sxcctw/internal/repository"
 	"github.com/Xanonymous-GitHub/sxcctw/internal/service"
+	db_client "github.com/Xanonymous-GitHub/sxcctw/pkg/gorm"
 	"github.com/Xanonymous-GitHub/sxcctw/pkg/proto/pb"
 	"github.com/sirupsen/logrus"
 	"google.golang.org/grpc"
@@ -17,12 +18,12 @@ type recordServer struct {
 	recordService service.RecordService
 }
 
-func RegisterRecordServiceServer(server *grpc.Server, db *gorm.DB, logger *logrus.Logger) {
-	recordRepository := repository.CreateNewRecordRepositoryWith(db, logger)
+func RegisterRecordServiceServer(server *grpc.Server, client db_client.DBClient, logger *logrus.Logger) {
+	recordRepository := repository.CreateNewRecordRepositoryWith(client.DB(), logger)
 	recordService := service.CreateRecordServiceWith(recordRepository, logger)
 
 	pb.RegisterRecordServiceServer(server, &recordServer{
-		db:            db,
+		db:            client.DB(),
 		logger:        logger,
 		recordService: recordService,
 	})
