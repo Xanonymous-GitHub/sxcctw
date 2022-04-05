@@ -9,8 +9,8 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-func RegisterRestApiHandlers(recordSvcClient *pb.RecordServiceClient, router *gin.Engine, logger *logrus.Logger) error {
-	urlRepository := repository.CreateUrlRepositoryWith(*recordSvcClient, logger)
+func RegisterRestApiHandlers(recordSvcClient pb.RecordServiceClient, router *gin.Engine, logger *logrus.Logger) error {
+	urlRepository := repository.CreateUrlRepositoryWith(recordSvcClient, logger)
 	urlService := service.CreateUrlServiceWith(urlRepository, logger)
 
 	handler := CreateNewRestApiHandlerWith(urlService, logger)
@@ -18,7 +18,7 @@ func RegisterRestApiHandlers(recordSvcClient *pb.RecordServiceClient, router *gi
 	routerGroup := router.Group(env.ApiRootPath)
 	{
 		routerGroup.GET("/url", handler.HandleGetOriginUrl)
-		routerGroup.POST("/url", handler.HandleGetOriginUrl)
+		routerGroup.POST("/url", handler.HandleCreateRecord)
 	}
 
 	return nil
