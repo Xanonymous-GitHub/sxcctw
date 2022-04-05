@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"errors"
 	"github.com/Xanonymous-GitHub/sxcctw/internal/repository"
 	"github.com/Xanonymous-GitHub/sxcctw/pkg/proto/pb"
 	"github.com/sirupsen/logrus"
@@ -10,7 +9,7 @@ import (
 )
 
 type UrlService interface {
-	GetOriginUrl(shortenedId string) (*string, error)
+	GetOriginUrl(shortenedId string) (*string, *pb.RecordStatus, error)
 	CreateRecord(originUrl string, expireAt time.Time) (*string, error)
 }
 
@@ -29,26 +28,14 @@ func CreateUrlServiceWith(
 	}
 }
 
-func (s *urlService) GetOriginUrl(shortenedId string) (*string, error) {
+func (s *urlService) GetOriginUrl(shortenedId string) (*string, *pb.RecordStatus, error) {
 	result, err := s.urlRepository.GetOriginUrlWith(context.Background(), shortenedId)
 	if err != nil {
 		s.logger.Errorln(err)
-		return nil, err
+		return nil, nil, err
 	}
 
-	if result.Status == pb.RecordStatus_EXPIRED {
-		msg := "record expired"
-		s.logger.Warningln(msg)
-		return nil, errors.New(msg)
-	}
-
-	if result.Status == pb.RecordStatus_NOTFOUND {
-		msg := "record not found"
-		s.logger.Warningln(msg)
-		return nil, errors.New(msg)
-	}
-
-	return &result.OriginUrl, nil
+	return &result.OriginUrl, &result.Status, nil
 }
 
 func (s *urlService) CreateRecord(originUrl string, expireAt time.Time) (*string, error) {

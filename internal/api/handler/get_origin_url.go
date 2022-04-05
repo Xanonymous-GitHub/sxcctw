@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/Xanonymous-GitHub/sxcctw/pkg/proto/pb"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strings"
@@ -18,7 +19,7 @@ func (h *handler) HandleGetOriginUrl(ctx *gin.Context) {
 		return
 	}
 
-	originUrl, err := h.urlService.GetOriginUrl(id)
+	originUrl, status, err := h.urlService.GetOriginUrl(id)
 	if err != nil {
 		h.logger.Errorln(err)
 		ctx.AbortWithStatus(http.StatusInternalServerError)
@@ -27,6 +28,21 @@ func (h *handler) HandleGetOriginUrl(ctx *gin.Context) {
 	if originUrl == nil {
 		h.logger.Warningln("origin url is empty")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+	if status == nil {
+		h.logger.Warningln("status is nil")
+		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	if *status == pb.RecordStatus_EXPIRED {
+		ctx.AbortWithStatus(http.StatusGone)
+		return
+	}
+
+	if *status == pb.RecordStatus_NOTFOUND {
+		ctx.AbortWithStatus(http.StatusNotFound)
 		return
 	}
 
