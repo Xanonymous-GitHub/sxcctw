@@ -21,12 +21,15 @@ func RegisterRestApiHandlers(recordSvcClient pb.RecordServiceClient, router *gin
 		routerGroup.POST("/url", handler.HandleCreateRecord)
 	}
 
+	router.Any("/:id", handler.HandleRedirect)
+
 	return nil
 }
 
 type RestApiHandler interface {
 	HandleGetOriginUrl(*gin.Context)
 	HandleCreateRecord(*gin.Context)
+	HandleRedirect(*gin.Context)
 }
 
 type handler struct {
