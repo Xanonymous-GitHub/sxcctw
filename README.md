@@ -1,16 +1,37 @@
-# Simple URL Shortener on Xanonymous Core Cell (xcc).
+# Simple URL Shortener on Xanonymous Core Cell.
 
 It is An URL shortener.
 
-BUT STILL DEVELOPED IN PROGRESS.
-Please go back here to see the changes later.
+BUT STILL DEVELOPED IN PROGRESS. Please go back here to see the changes later.
+
+## Try it now
+
+1. Create your shortened URL.
+
+```shell
+curl --location --request POST 'https://s.xcc.tw/api/url' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "originUrl": "https://google.com",
+    "expireAt": "2034-11-12T11:45:26.371Z"
+}'
+```
+
+2. Then use it
+
+```shell
+# Go to this URL, then you will be redirected to https://google.com .
+https://s.xcc.tw/V5Ye6eCRzqd
+```
 
 ## TODOS
-- [ ] Add redis.
+
+- [ ] Add redis. (In progress...)
 - [ ] Add openAPI3 doc.
 - [ ] Add k8s yaml.
 - [ ] Consider not use base62 (KGS, or else...??)
 - [ ] Add tests.
+- [ ] cronjob (maybe)
 
 ## Get started
 
@@ -60,9 +81,12 @@ docker run --name mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABA
 ./scripts/watchgo.sh sxcctw_api
 ```
 
-## How to use? (for this time)
+## How to use? (for development)
+
 (openAPI doc TBD)
+
 #### Create new ID. (201 Created)
+
 ```shell
 # Create a shortened id, which is from `https://ntut/club`,
 # and set expire time at `2034-11-12T11:45:26.371Z`.
@@ -75,6 +99,7 @@ curl --location --request POST 'localhost:8080/api/url' \
 ```
 
 #### Get URL by existed ID. (200 OK / 404 Not Found / 410 Gone)
+
 ```shell
 # Get an existing shortened id (ZNkw23qpiss).
 curl --location --request GET 'localhost:8080/api/url?id=ZNkw23qpiss'
