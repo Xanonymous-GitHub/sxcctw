@@ -55,7 +55,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@master
         with:
-          images: ${{ env.API_IMAGE_NAME }}
+          images: ${{ env.DB_IMAGE_NAME }}
           flavor: |
             latest=true
           tags: |
