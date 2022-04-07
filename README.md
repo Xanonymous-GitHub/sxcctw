@@ -2,6 +2,11 @@
 
 It is An URL shortener.
 
+[![Service Build](https://github.com/Xanonymous-GitHub/sxcctw/actions/workflows/go.yml/badge.svg)](https://github.com/Xanonymous-GitHub/sxcctw/actions/workflows/go.yml)
+[![Web Build](https://github.com/Xanonymous-GitHub/sxcctw/actions/workflows/web.yml/badge.svg)](https://github.com/Xanonymous-GitHub/sxcctw/actions/workflows/web.yml)
+[![API Image](https://github.com/Xanonymous-GitHub/sxcctw/actions/workflows/docker-publish-sxcctw-api.yml/badge.svg)](https://github.com/Xanonymous-GitHub/sxcctw/actions/workflows/docker-publish-sxcctw-api.yml)
+[![DB Image](https://github.com/Xanonymous-GitHub/sxcctw/actions/workflows/docker-publish-sxcctw-db.yml/badge.svg)](https://github.com/Xanonymous-GitHub/sxcctw/actions/workflows/docker-publish-sxcctw-db.yml)
+
 BUT STILL DEVELOPED IN PROGRESS. Please go back here to see the changes later.
 
 ## Try it now
@@ -12,7 +17,7 @@ BUT STILL DEVELOPED IN PROGRESS. Please go back here to see the changes later.
 curl --location --request POST 'https://s.xcc.tw/api/url' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "originUrl": "https://google.com",
+    "originUrl": "https://www.dcard.tw/f/mood/p/238545781?cid=306EA5A4-D67F-41A8-903F-1456E8FDE547",
     "expireAt": "2034-11-12T11:45:26.371Z"
 }'
 ```
@@ -20,8 +25,8 @@ curl --location --request POST 'https://s.xcc.tw/api/url' \
 2. Then use it
 
 ```shell
-# Go to this URL, then you will be redirected to https://google.com .
-https://s.xcc.tw/V5Ye6eCRzqd
+# Go to this URL.
+https://s.xcc.tw/v5oSt3VFD1l
 ```
 
 ## TODOS
@@ -29,6 +34,7 @@ https://s.xcc.tw/V5Ye6eCRzqd
 - [ ] Add redis. (In progress...)
 - [ ] Add openAPI3 doc.
 - [ ] Add k8s yaml.
+- [ ] Add LB, Grafana, ArgoCD
 - [ ] Consider not use base62 (KGS, or else...??)
 - [ ] Add tests.
 - [ ] cronjob (maybe)
@@ -104,3 +110,10 @@ curl --location --request POST 'localhost:8080/api/url' \
 # Get an existing shortened id (ZNkw23qpiss).
 curl --location --request GET 'localhost:8080/api/url?id=ZNkw23qpiss'
 ```
+
+## Why I choose (TBD)
+- MySQL
+- Gin
+- Gorm
+- gRPC
+- Clean Architecture
