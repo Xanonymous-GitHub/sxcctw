@@ -4,7 +4,6 @@ import (
 	"github.com/Xanonymous-GitHub/sxcctw/pkg/proto/pb"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"net/url"
 	"strings"
 )
 
@@ -15,8 +14,6 @@ func (h *handler) HandleRedirect(ctx *gin.Context) {
 		ctx.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
-
-	id = url.QueryEscape(id)
 
 	originUrl, status, err := h.urlService.GetOriginUrl(id)
 	if err != nil {
