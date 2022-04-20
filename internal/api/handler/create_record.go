@@ -73,7 +73,7 @@ func (h *handler) HandleCreateRecord(ctx *gin.Context) {
 		return
 	}
 	if validOriginUrl.Host == env.ShortenServerHost {
-		msg := "originUrl has already be shortened"
+		msg := "originUrl has already been shortened"
 		h.logger.Warningln(msg)
 		ctx.JSON(http.StatusBadRequest, &errResponse{Msg: msg})
 		return
