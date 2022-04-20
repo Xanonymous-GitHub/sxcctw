@@ -14,6 +14,7 @@ var (
 	DBName                  string
 	ApiRestServerPort       string
 	ApiRootPath             string
+	ShortenServerHost       string
 )
 
 func init() {
@@ -29,4 +30,5 @@ func init() {
 	DBName = viper.GetString("DB_NAME")
 	ApiRestServerPort = viper.GetString("API_REST_SERVER_PORT")
 	ApiRootPath = viper.GetString("API_ROOT_PATH")
+	ShortenServerHost = viper.GetString("SHORTEN_SERVER_HOST")
 }

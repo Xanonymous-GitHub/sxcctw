@@ -50,3 +50,4 @@ envs:
   - DB_GRPC_SERVER_HOST=localhost
   - API_REST_SERVER_PORT=8080
   - API_ROOT_PATH=/api
+  - SHORTEN_SERVER_HOST=localhost
