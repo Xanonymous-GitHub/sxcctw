@@ -5,9 +5,15 @@ const host = import.meta.env.DEV ? 'http://localhost:8080' : 'https://s.xcc.tw'
 
 const originUrl = ref('')
 const shortenedUrl = ref('')
+const errMsg = ref('')
 
 const showShortenedResult = (id: string) => {
   shortenedUrl.value = `${host}/s/${id}`
+  navigator.clipboard.writeText(shortenedUrl.value)
+}
+
+const showErrMsg = (msg: string) => {
+  errMsg.value = msg
 }
 
 const isValidateUrl = (url: string): boolean => {
@@ -18,6 +24,7 @@ const isValidateUrl = (url: string): boolean => {
   catch (e) {
     return false
   }
+
   return true
 }
 
@@ -29,6 +36,10 @@ const go = async() => {
     return
   if (result.shortenedID)
     showShortenedResult(result.shortenedID)
+  if (result.msg)
+    showErrMsg(result.msg)
+  else
+    showErrMsg('Error occurred!')
 }
 
 </script>
@@ -42,8 +53,12 @@ const go = async() => {
     <em text-sm op75>Shorten your URL easily and quickly, easy to use, unconstrained, safe and secure.</em>
   </p>
 
-  <h2 text-blue my-6 select-text font-bold>
+  <h2 v-if="shortenedUrl" text-blue my-6 select-text font-bold>
     <a :href="shortenedUrl" target="_blank" rel="noreferrer nofollow noopener">{{ shortenedUrl }}</a>
+  </h2>
+
+  <h2 v-if="!shortenedUrl && errMsg" text-red font-bold>
+    {{ errMsg }}
   </h2>
 
   <div py-4 />
@@ -70,7 +85,7 @@ const go = async() => {
       :disabled="shortenedUrl || !isValidateUrl(originUrl)"
       @click.stop="go"
     >
-      {{ shortenedUrl ? 'DONE' : 'Short it now' }}
+      {{ shortenedUrl ? 'Copied!' : 'Short it now' }}
     </button>
   </div>
 </template>
