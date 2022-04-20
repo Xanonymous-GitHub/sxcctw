@@ -6,7 +6,7 @@ services:
     depends_on:
       - api
     ports:
-      - "${EXPORT_PORT}:${WEBPORT}"
+      - "${WEB_EXPORT_PORT}:${WEBPORT}"
     networks:
       - sxcctw_web
     environment:
@@ -20,7 +20,7 @@ services:
     depends_on:
       - db-api
     ports:
-      - "${API_REST_SERVER_PORT}"
+      - "${API_EXPORT_PORT}:${API_REST_SERVER_PORT}"
     networks:
       - sxcctw_web
       - sxcctw_net
