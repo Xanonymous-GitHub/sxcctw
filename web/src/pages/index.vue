@@ -9,42 +9,38 @@ const go = () => {
 </script>
 
 <template>
+  <div i-flat-color-icons-close-up-mode text-4xl inline-block />
+  <h1>
+    SXCCTW URL Shortener
+  </h1>
+  <p>
+    <em text-sm op75>Shorten your URL easily and quickly, easy to use, unconstrained, safe and secure.</em>
+  </p>
+
+  <div py-4 />
+
+  <input
+    id="input"
+    v-model="name"
+    placeholder="Origin URL?"
+    type="text"
+    autocomplete="false"
+    p="x-4 y-2"
+    w="250px"
+    text="center"
+    bg="transparent"
+    border="~ rounded gray-200 dark:gray-700"
+    outline="none active:none"
+    @keydown.enter="go"
+  >
+
   <div>
-    <div i-carbon-campsite text-4xl inline-block />
-    <p>
-      <a rel="noreferrer" href="https://github.com/antfu/vitesse-lite" target="_blank">
-        Vitesse Lite
-      </a>
-    </p>
-    <p>
-      <em text-sm op75>Opinionated Vite Starter Template</em>
-    </p>
-
-    <div py-4 />
-
-    <input
-      id="input"
-      v-model="name"
-      placeholder="What's your name?"
-      type="text"
-      autocomplete="false"
-      p="x-4 y-2"
-      w="250px"
-      text="center"
-      bg="transparent"
-      border="~ rounded gray-200 dark:gray-700"
-      outline="none active:none"
-      @keydown.enter="go"
+    <button
+      class="m-3 text-sm btn"
+      :disabled="!name"
+      @click="go"
     >
-
-    <div>
-      <button
-        class="m-3 text-sm btn"
-        :disabled="!name"
-        @click="go"
-      >
-        Go
-      </button>
-    </div>
+      Short it
+    </button>
   </div>
 </template>
