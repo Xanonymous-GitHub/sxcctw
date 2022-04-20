@@ -1,7 +1,7 @@
 FROM node:lts-alpine
 
 ARG WORKPLACE=/sxcctw-web
-ENV WEBPORT $WEBPORT
+ENV WEBPORT=$WEBPORT
 
 COPY ./web $WORKPLACE
 
@@ -18,5 +18,4 @@ RUN mkdir ../to_rm && \
     rm -rf ../to_rm
 
 ENV NODE_ENV=production
-EXPOSE $WEBPORT
 CMD ["serve", "-s", "dist", "-p", "$WEBPORT"]
