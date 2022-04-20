@@ -18,4 +18,6 @@ RUN mkdir ../to_rm && \
     rm -rf ../to_rm
 
 ENV NODE_ENV=production
-CMD ["serve", "-s", "dist", "-p", "$WEBPORT"]
+
+# The default export port will be set to 3000.
+CMD ["serve", "-s", "dist"]

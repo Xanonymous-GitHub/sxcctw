@@ -6,7 +6,7 @@ services:
     depends_on:
       - api
     ports:
-      - "${WEB_EXPORT_PORT}:${WEBPORT}"
+      - "${WEB_EXPORT_PORT}:3000"
     networks:
       - sxcctw_web
     environment:
