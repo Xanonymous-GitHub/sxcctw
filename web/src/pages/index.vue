@@ -1,11 +1,36 @@
 <script setup lang="ts">
-const name = ref('')
+import { requestNewUrlShortenRecord } from '~/api/service'
 
-const router = useRouter()
-const go = () => {
-  if (name.value)
-    router.push(`/hi/${encodeURIComponent(name.value)}`)
+const host = import.meta.env.DEV ? 'http://localhost:8080' : 'https://s.xcc.tw'
+
+const originUrl = ref('')
+const shortenedUrl = ref('')
+
+const showShortenedResult = (id: string) => {
+  shortenedUrl.value = `${host}/s/${id}`
 }
+
+const isValidateUrl = (url: string): boolean => {
+  try {
+    // eslint-disable-next-line no-new
+    new URL(url)
+  }
+  catch (e) {
+    return false
+  }
+  return true
+}
+
+const go = async() => {
+  if (!isValidateUrl(originUrl.value))
+    return
+  const result = await requestNewUrlShortenRecord(originUrl.value)
+  if (!result)
+    return
+  if (result.shortenedID)
+    showShortenedResult(result.shortenedID)
+}
+
 </script>
 
 <template>
@@ -17,11 +42,16 @@ const go = () => {
     <em text-sm op75>Shorten your URL easily and quickly, easy to use, unconstrained, safe and secure.</em>
   </p>
 
+  <h2 text-blue my-6 select-text font-bold>
+    <a :href="shortenedUrl" target="_blank" rel="noreferrer nofollow noopener">{{ shortenedUrl }}</a>
+  </h2>
+
   <div py-4 />
 
   <input
+    v-if="!shortenedUrl"
     id="input"
-    v-model="name"
+    v-model="originUrl"
     placeholder="Origin URL?"
     type="text"
     autocomplete="false"
@@ -37,10 +67,10 @@ const go = () => {
   <div>
     <button
       class="m-3 text-sm btn"
-      :disabled="!name"
-      @click="go"
+      :disabled="shortenedUrl || !isValidateUrl(originUrl)"
+      @click.stop="go"
     >
-      Short it
+      {{ shortenedUrl ? 'DONE' : 'Short it now' }}
     </button>
   </div>
 </template>
