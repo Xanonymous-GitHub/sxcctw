@@ -1,13 +1,28 @@
 version: '3'
 
 services:
+  web:
+    image: xanonymous/sxcctw-web
+    depends_on:
+      - api
+    ports:
+      - "${EXPORT_PORT}:${WEBPORT}"
+    networks:
+      - sxcctw_web
+    environment:
+      - WEBPORT=${WEBPORT}
+      - API_REST_SERVER_PORT=${API_REST_SERVER_PORT}
+      - API_REST_SERVER_HOST=api
+    restart: unless-stopped
+
   api:
     image: xanonymous/sxcctw-api
     depends_on:
       - db-api
     ports:
-      - "${EXPORT_PORT}:${API_REST_SERVER_PORT}"
+      - "${API_REST_SERVER_PORT}"
     networks:
+      - sxcctw_web
       - sxcctw_net
     environment:
       - DEBUG=false
@@ -63,5 +78,6 @@ volumes:
   mysql_data:
 
 networks:
+  sxcctw_web:
   sxcctw_net:
   sxcctw_db:
