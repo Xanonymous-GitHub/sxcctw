@@ -1,8 +1,10 @@
 package handler
 
 import (
+	"github.com/Xanonymous-GitHub/sxcctw/pkg/proto/pb"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -13,6 +15,8 @@ func (h *handler) HandleRedirect(ctx *gin.Context) {
 		ctx.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
+
+	id = url.QueryEscape(id)
 
 	originUrl, status, err := h.urlService.GetOriginUrl(id)
 	if err != nil {
@@ -28,6 +32,16 @@ func (h *handler) HandleRedirect(ctx *gin.Context) {
 	if status == nil {
 		h.logger.Warningln("status is nil")
 		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	if *status == pb.RecordStatus_EXPIRED {
+		ctx.AbortWithStatus(http.StatusGone)
+		return
+	}
+
+	if *status == pb.RecordStatus_NOTFOUND {
+		ctx.AbortWithStatus(http.StatusNotFound)
 		return
 	}
 

@@ -88,7 +88,7 @@ func (h *handler) HandleCreateRecord(ctx *gin.Context) {
 		expireAt = *req.ExpireAt
 	}
 
-	shortenedID, err := h.urlService.CreateRecord(validOriginUrl.String(), expireAt)
+	shortenedID, err := h.urlService.CreateRecord(url.QueryEscape(validOriginUrl.String()), expireAt)
 	if err != nil {
 		h.logger.Errorln(err)
 		msg := "Error occurred when creating shortened URL, error code: 1"

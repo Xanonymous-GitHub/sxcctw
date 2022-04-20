@@ -4,6 +4,7 @@ import (
 	"github.com/Xanonymous-GitHub/sxcctw/pkg/proto/pb"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -19,15 +20,17 @@ func (h *handler) HandleGetOriginUrl(ctx *gin.Context) {
 		return
 	}
 
+	id = url.QueryEscape(id)
+
 	originUrl, status, err := h.urlService.GetOriginUrl(id)
 	if err != nil {
 		h.logger.Errorln(err)
-		ctx.AbortWithStatus(http.StatusInternalServerError)
+		ctx.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 	if originUrl == nil {
 		h.logger.Warningln("origin url is empty")
-		ctx.AbortWithStatus(http.StatusInternalServerError)
+		ctx.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 	if status == nil {
