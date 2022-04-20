@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/Xanonymous-GitHub/sxcctw/pkg/env"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
@@ -27,6 +28,10 @@ func NewEngine(lc fx.Lifecycle) (*gin.Engine, error) {
 		gin.Logger(),
 		gin.Recovery(),
 	)
+
+	if env.IsDebugMode {
+		engine.Use(cors.Default())
+	}
 
 	engine.GET("/health", func(c *gin.Context) {
 		c.Status(http.StatusOK)
