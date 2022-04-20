@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+  api:
+    image: xanonymous/sxcctw-api
+    depends_on:
+      - db-api
+    ports:
+      - "${EXPORT_PORT}:${API_REST_SERVER_PORT}"
+    networks:
+      - sxcctw_net
+    environment:
+      - DEBUG=false
+      - DB_GRPC_SEVER_PORT=${DB_GRPC_SEVER_PORT}
+      - DB_GRPC_SERVER_HOST=db-api
+      - API_REST_SERVER_PORT=${API_REST_SERVER_PORT}
+      - API_ROOT_PATH=${API_ROOT_PATH}
+      - SHORTEN_SERVER_HOST=${SHORTEN_SERVER_HOST}
+    restart: unless-stopped
+
+  db-api:
+    image: xanonymous/sxcctw-db
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${DB_GRPC_SEVER_PORT}"
+    networks:
+      - sxcctw_net
+      - sxcctw_db
+    environment:
+        - DEBUG=false
+        - DB_GRPC_SEVER_PORT=${DB_GRPC_SEVER_PORT}
+        - DB_GRPC_SERVER_METRICS_PORT=${DB_GRPC_SERVER_METRICS_PORT}
+        - DB_USERNAME=${MYSQL_USER}
+        - DB_PASSWORD=${MYSQL_PASSWORD}
+        - DB_HOST=db
+        - DB_PORT=${DB_PORT}
+        - DB_NAME=${MYSQL_DATABASE}
+    restart: unless-stopped
+
+  db:
+    image: mysql
+    ports:
+      - "${DB_PORT}"
+    networks:
+      - sxcctw_db
+    environment:
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysql --host=localhost --user=root --password=$$MYSQL_ROOT_PASSWORD --silent --execute \"SELECT 1;\"  || exit 0"]
+      interval: 20s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
+
+networks:
+  sxcctw_net:
+  sxcctw_db:
