@@ -21,7 +21,7 @@ func RegisterRestApiHandlers(recordSvcClient pb.RecordServiceClient, router *gin
 		routerGroup.POST("/url", handler.HandleCreateRecord)
 	}
 
-	router.Any("/:id", handler.HandleRedirect)
+	router.Any("/s/:id", handler.HandleRedirect)
 
 	return nil
 }
