@@ -1,4 +1,4 @@
-FROM node:lts-alpine
+FROM node:alpine
 
 ARG WORKPLACE=/sxcctw-web
 ENV WEBPORT=$WEBPORT
@@ -7,8 +7,8 @@ COPY ./web $WORKPLACE
 
 WORKDIR $WORKPLACE
 
-RUN npm i -g pnpm && \
-    pnpm i -g serve &&  \
+RUN npm i -g pnpm serve && \
+    pnpm setup && \
     pnpm i --frozen-lockfile &&  \
     pnpm build
 
