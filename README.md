@@ -26,7 +26,7 @@ curl --location --request POST 'https://s.xcc.tw/api/url' \
 
 ```shell
 # Go to this URL.
-https://s.xcc.tw/v5oSt3VFD1l
+https://s.xcc.tw/s/v5oSt3VFD1l
 ```
 
 ## TODOS
