@@ -8,7 +8,7 @@ COPY ./web $WORKPLACE
 WORKDIR $WORKPLACE
 
 RUN npm i -g pnpm serve && \
-    pnpm setup && \
+    SHELL="/bin/bash" pnpm setup && \
     pnpm i --frozen-lockfile &&  \
     pnpm build
 
