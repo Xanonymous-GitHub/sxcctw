@@ -41,10 +41,10 @@ https://s.xcc.tw/v5oSt3VFD1l
 
 ## Get started
 
-1. Ensure using go 1.18.
+1. Ensure using go 1.19.
 
 ```shell
-# go version go1.18
+# go version go1.19
 go version
 ```
 
