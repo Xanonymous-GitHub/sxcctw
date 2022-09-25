@@ -80,7 +80,7 @@ func (h *handler) HandleCreateRecord(ctx *gin.Context) {
 	}
 
 	var expireAt time.Time
-	foreverTime := time.Date(9999, time.December, 31, 23, 59, 59, 99, time.UTC)
+	foreverTime := time.Date(9990, time.December, 31, 23, 59, 59, 99, time.UTC)
 
 	if req.ExpireAt != nil && (*req.ExpireAt).Before(foreverTime) {
 		expireAt = *req.ExpireAt
