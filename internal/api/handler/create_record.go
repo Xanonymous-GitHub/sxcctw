@@ -82,8 +82,8 @@ func (h *handler) HandleCreateRecord(ctx *gin.Context) {
 	var expireAt time.Time
 
 	if req.ExpireAt == nil {
-		h.logger.Infoln("ExpireAt is empty, will set default expiration to 2 weeks.")
-		expireAt = time.Now().AddDate(0, 0, 14)
+		h.logger.Infoln("ExpireAt is empty, will set default expiration to forever.")
+		expireAt = time.Now().AddDate(9999, 0, 0)
 	} else {
 		expireAt = *req.ExpireAt
 	}
