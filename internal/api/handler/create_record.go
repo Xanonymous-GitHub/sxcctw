@@ -80,12 +80,13 @@ func (h *handler) HandleCreateRecord(ctx *gin.Context) {
 	}
 
 	var expireAt time.Time
+	foreverTime := time.Date(9999, time.December, 31, 23, 59, 59, 99, time.UTC)
 
-	if req.ExpireAt == nil {
-		h.logger.Infoln("ExpireAt is empty, will set default expiration to forever.")
-		expireAt = time.Now().AddDate(9999, 0, 0)
-	} else {
+	if req.ExpireAt != nil && (*req.ExpireAt).Before(foreverTime) {
 		expireAt = *req.ExpireAt
+	} else {
+		h.logger.Infoln("ExpireAt is empty or invalid, will set default expiration to forever.")
+		expireAt = foreverTime
 	}
 
 	shortenedID, err := h.urlService.CreateRecord(validOriginUrl.String(), expireAt)
