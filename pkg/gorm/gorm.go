@@ -45,6 +45,7 @@ func NewGORMMySQLClientWithoutLC() (*gorm.DB, error) {
 		env.DBHost,
 		env.DBPort,
 		env.DBName,
+		url.QueryEscape("Asia/Taipei"),
 		url.QueryEscape("'+8:00'"),
 	)
 
