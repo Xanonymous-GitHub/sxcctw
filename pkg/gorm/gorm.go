@@ -39,7 +39,7 @@ func NewGORMMySQLClient(lc fx.Lifecycle) (*gorm.DB, error) {
 
 // NewGORMMySQLClientWithoutLC return new *gorm.DB with mysql configs
 func NewGORMMySQLClientWithoutLC() (*gorm.DB, error) {
-	dsn := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=true&loc=%s&time_zone=%s",
+	dsn := fmt.Sprintf("%s:%s@(%s:%s)/%s?charset=utf8mb4&parseTime=true&loc=%s",
 		env.DBUserName,
 		env.DBPassword,
 		env.DBHost,
