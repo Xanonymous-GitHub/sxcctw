@@ -1,23 +1,35 @@
-FROM node:alpine
+# First stage: Build the application
+FROM node:alpine AS build
 
-ARG WORKPLACE=/sxcctw-web
-ENV WEBPORT=$WEBPORT
+# Install pnpm globally
+RUN npm install -g pnpm
 
-COPY ./web $WORKPLACE
+# Set the working directory
+WORKDIR /app
 
-WORKDIR $WORKPLACE
+# Copy package.json and pnpm-lock.yaml
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm i -g pnpm serve && \
-    SHELL="/bin/bash" pnpm setup && \
-    pnpm i --frozen-lockfile &&  \
-    pnpm build
+# Install dependencies
+RUN pnpm install --frozen-lockfile
 
-RUN mkdir ../to_rm && \
-    mv ./* ../to_rm && \
-    mv ../to_rm/dist ./ && \
-    rm -rf ../to_rm
+# Copy the rest of the application files
+COPY . .
 
-ENV NODE_ENV=production
+# Build the application
+RUN pnpm build
 
-# The default export port will be set to 3000.
-CMD ["serve", "-s", "dist"]
+# Second stage: Serve the application with NGINX
+FROM nginx:stable-alpine
+
+# Copy built files from the build stage to the NGINX html directory
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Copy an optional custom nginx configuration file if needed
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]
