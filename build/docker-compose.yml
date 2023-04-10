@@ -14,6 +14,10 @@ services:
       - API_REST_SERVER_PORT=${API_REST_SERVER_PORT}
       - API_REST_SERVER_HOST=api
     restart: unless-stopped
+    deploy:
+      update_config:
+        order: start-first
+    pull_policy: always
 
   api:
     image: xanonymous/sxcctw-api
@@ -32,6 +36,10 @@ services:
       - API_ROOT_PATH=${API_ROOT_PATH}
       - SHORTEN_SERVER_HOST=${SHORTEN_SERVER_HOST}
     restart: unless-stopped
+    deploy:
+      update_config:
+        order: start-first
+    pull_policy: always
 
   db-api:
     image: xanonymous/sxcctw-db
@@ -53,6 +61,10 @@ services:
         - DB_PORT=${DB_PORT}
         - DB_NAME=${MYSQL_DATABASE}
     restart: unless-stopped
+    deploy:
+      update_config:
+        order: start-first
+    pull_policy: always
 
   db:
     image: mysql
@@ -73,6 +85,10 @@ services:
       timeout: 5s
       retries: 10
     restart: unless-stopped
+    deploy:
+      update_config:
+        order: start-first
+    pull_policy: always
 
 volumes:
   mysql_data:
